@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #from django.db import models
 from django.contrib.gis.db import models
 
@@ -20,7 +21,7 @@ class Adm(models.Model):
     name = models.CharField(max_length=254)
     okato_code = models.CharField(max_length=11)
     area = models.IntegerField()
-    geom = models.TextField()
+    geom = models.MultiPolygonField()
 
     def __str__(self):
         return self.name

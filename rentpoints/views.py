@@ -1,18 +1,23 @@
+# -*- coding: utf-8 -*-
 from django.db.models import Count
 from .models import Points, Adm
 from django.http import JsonResponse
-from .serializer import PointsSerializer, AdmSerializer
-from rest_framework import generics
+import collections
 
 
-def points_statistic(request):
-    queryset = Points.objects.values('type').annotate(dcount=Count('type'))
-    serializer = PointsSerializer(queryset, many=True)
-    return JsonResponse(serializer.data, safe=False)
+def points_in_adm(request, id):
 
+    adm = Adm.objects.get(gid=id)
+    points_in_adm = collections.Counter()
+    for p in Points.objects.all():
+        if adm.geom.intersects(p.geom):
+            points_in_adm[p.type] += 1
 
-class AdmDetail(generics.RetrieveAPIView):
-    queryset = Adm.objects.all()
-    serializer_class = AdmSerializer
-    lookup_field = 'gid'
+    points_type_all = Points.objects.values('type').annotate(dcount=Count('type'))
+    points_types_adm = []
+    for st in points_type_all:
+        points_types_adm.append(dict(type=st["type"],
+                                 count_points=points_in_adm[st["type"]],
+                                 procent_points=points_in_adm[st["type"]]*100/st["dcount"]))
+    return JsonResponse(points_types_adm, safe=False)
 
