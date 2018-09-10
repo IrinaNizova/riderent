@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" href="{% static 'js/leaflet.css' %}">
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="{% static 'js/angular.min.js' %}"></script>
+<script src='{% static "js/module.js" %}'></script>
+
+<html lang="en">
+<head>
+    <style>
+        #mapid { width: 700px; height: 900px; }
+    </style>
+    <meta charset="UTF-8">
+    <title>Here</title>
+</head>
+<body ng-app="adms">
+
+
+<div id="mapid"></div>
+<div ng-controller="LayersController"></div>
+
+<script type='text/javascript'>
+//Определяем карту, координаты центра и начальный масштаб
+var mymap = L.map('mapid').setView([43.9319239, 49.9201662], 7);
+
+//Добавляем на нашу карту слой OpenStreetMap
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoiaW5pem92YSIsImEiOiJjamx3MDk3OXcxMWp5M2tyNm85dG83Y3J1In0.L2EFfgETsvikvbRDQDm9gQ'
+}).addTo(mymap);
+
+</script>
+
+</body>
+</html>

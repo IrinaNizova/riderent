@@ -10,7 +10,7 @@ myApp.controller("LayersController", function ($scope, $http, $window) {
         $scope.adm_list.forEach(function(entry) {
             var geom = entry.geometry.coordinates[0];
             var poly = $window.L.polygon(geom).addTo($window.mymap);
-            poly.on('click', function(e) {
+            poly.on({'click': function(e) {
              $http({
               method: 'GET',
               url: 'points_in_adm/'+ entry.properties.gid
@@ -22,6 +22,13 @@ myApp.controller("LayersController", function ($scope, $http, $window) {
                 })
                 poly.bindPopup(popup_text);
               })
+             },
+             'mouseover': function(e) {
+                poly.setStyle({color: '#00FF80'});
+                },
+             'mouseout': function(e) {
+                poly.setStyle({color: '#2E9AFE'});
+                },
              });
         });
 
