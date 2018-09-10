@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url
-from rentpoints.views import points_in_adm, main
+from rentpoints.views import points_in_adm, index, adm_data
 
 
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    url('', main),
-    url('^(?P<id>[0-9]+)', points_in_adm)
+    url('^$', index),
+    url('^points_in_adm/(?P<id>[0-9]+)', points_in_adm),
+    url('^adm_data/', adm_data)
 ]

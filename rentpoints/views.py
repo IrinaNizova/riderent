@@ -4,11 +4,26 @@ from .models import Points, Adm
 from django.http import JsonResponse
 from django.shortcuts import render
 import collections
+import json
 
 
-def main(request):
+def index(request):
+    return render(request, 'index.html')
+
+
+def adm_data(request):
     adm_list = Adm.objects.all()
-    return render(request, 'index.html', {'adm_list': adm_list})
+    jsons = []
+
+    for adm in adm_list:
+        obj = {}
+        obj["properties"] = {}
+        obj["geometry"] = json.loads(adm.geom.json)
+        obj["properties"]["gid"] = adm.gid
+        obj["properties"]["name"]= adm.name
+        jsons.append(obj)
+    return JsonResponse(jsons, safe=False)
+
 
 def points_in_adm(request, id):
 
@@ -25,4 +40,3 @@ def points_in_adm(request, id):
                                  count_points=points_in_adm[st["type"]],
                                  procent_points=points_in_adm[st["type"]]*100/st["dcount"]))
     return JsonResponse(points_types_adm, safe=False)
-
