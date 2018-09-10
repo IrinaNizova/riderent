@@ -2,8 +2,13 @@
 from django.db.models import Count
 from .models import Points, Adm
 from django.http import JsonResponse
+from django.shortcuts import render
 import collections
 
+
+def main(request):
+    adm_list = Adm.objects.all()
+    return render(request, 'index.html', {'adm_list': adm_list})
 
 def points_in_adm(request, id):
 
