@@ -1,8 +1,8 @@
 # riderent
- Я создала в postgres базу velobike с расширением postgis
- Из архива я создала два sql файла
+РЇ СЃРѕР·РґР°Р»Р° РІ postgres Р±Р°Р·Сѓ velobike СЃ СЂР°СЃС€РёСЂРµРЅРёРµРј postgis
+ РР· Р°СЂС…РёРІР° СЏ СЃРѕР·РґР°Р»Р° РґРІР° sql С„Р°Р№Р»Р°
  shp2pgsql C:\test_shp_data\points.shp > points.sql
  shp2pgsql C:\test_shp_data\adm.shp > adm.sql
- А потом загрузила их в базу командамит
+ Рђ РїРѕС‚РѕРј Р·Р°РіСЂСѓР·РёР»Р° РёС… РІ Р±Р°Р·Сѓ РєРѕРјР°РЅРґР°РјРё
  psql -h localhost -p 5434 -d velobike -U postgres -f points.sql
  psql -h localhost -p 5434 -d velobike -U postgres -f adm.sql
